@@ -506,9 +506,10 @@ class FibPoster(ui.View):
         if touch.touch_id == self._active_touch_id:
             self._active_touch_id = None
             self._touch_prev = None
-        if touch.tap_count >= 2:
+        tap_count = getattr(touch, 'tap_count', getattr(touch, 'num_taps', 1))
+        if tap_count >= 2:
             self._handle_double_tap(touch.location)
-        elif touch.tap_count == 1 and self.anim_progress >= 1.0:
+        elif tap_count == 1 and self.anim_progress >= 1.0:
             self._start_spiral_animation()
 
     def _handle_double_tap(self, location):
