@@ -535,7 +535,7 @@ class FibPoster(ui.View):
         if loc is None:
             return
         x, y = loc
-        prev = self._touch_prev
+        prev = self._point_to_tuple(self._touch_prev, self)
         if prev is None:
             self._touch_prev = (x, y)
             return
