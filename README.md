@@ -68,16 +68,7 @@ This script visualizes that relationship through recursive square tiling and con
 - **Pythonista 3** (latest version)  
 - **iOS 16 or newer**  
 - Screen optimized for **iPhone 14 Pro Max**  
-- No external dependencies required  
-
----
-
-## 🗓 Version History
-
-| Version | Date | Changes |
-|:--------:|:----:|:--------|
-| **1.1** | 2025-11-12 | Added new screenshot and README update for GitHub release |
-| **1.0** | 2025-11-11 | Initial public release — full Fibonacci spiral implementation with safe-area support |
+- No external dependencies required  |
 
 ---
 
