@@ -43,7 +43,7 @@ Key routines:
 ## 📱 Installation
 
 1. Open **Pythonista 3** on your iPhone or iPad.  
-2. Copy or import `fibonacci_demo_final.py` into your **Documents** folder.  
+2. Copy or import `fibonacci_demo.py` into your **Documents** folder.  
 3. Run the script — the Fibonacci spiral viewer launches immediately.  
 
 ---
