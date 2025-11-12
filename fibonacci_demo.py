@@ -227,10 +227,10 @@ class FibPoster(ui.View):
         # Close (×) button
         self.close_btn = ui.Button(
             title='×',
-            font=('<System-Bold>', 32),
+            font=('<System-Bold>', 26),
             tint_color=(0.3, 0.3, 0.3),
             background_color=(1, 1, 1, 0.7),
-            corner_radius=20,
+            corner_radius=16,
             action=self._close_action)
         self.close_btn.flex = 'L'
         self.add_subview(self.close_btn)
@@ -238,7 +238,7 @@ class FibPoster(ui.View):
         # Export (PNG) button
         self.export_btn = ui.Button(
             title='PNG',
-            font=('<System-Bold>', 16),
+            font=('<System-Bold>', 14),
             tint_color=(1, 1, 1),
             background_color=(0.12, 0.12, 0.14, 0.85),
             corner_radius=8,
@@ -249,7 +249,7 @@ class FibPoster(ui.View):
         # Palette button
         self.palette_btn = ui.Button(
             title='Palette',
-            font=('<System>', 14),
+            font=('<System>', 13),
             tint_color=(1, 1, 1),
             background_color=(0.2, 0.2, 0.25, 0.85),
             corner_radius=8,
@@ -322,19 +322,25 @@ class FibPoster(ui.View):
 
     def layout(self):
         self.update_safe_insets()
-        btn_size = 44
+        btn_size = 36
+        compact_height = 26
+        spacing = 6
         safe = self._safe_top
+
         self.close_btn.width = self.close_btn.height = btn_size
+        self.close_btn.corner_radius = btn_size / 2.0
         self.close_btn.x = self.width - btn_size - MARGIN
-        self.close_btn.y = safe + 8
-        self.export_btn.height = 30
-        self.export_btn.width = 66
-        self.export_btn.y = safe + 15
-        self.export_btn.x = self.close_btn.x - self.export_btn.width - 8
-        self.palette_btn.height = 30
-        self.palette_btn.width = 86
-        self.palette_btn.y = safe + 15
-        self.palette_btn.x = self.export_btn.x - self.palette_btn.width - 8
+        self.close_btn.y = safe + 10
+
+        for btn in (self.export_btn, self.palette_btn):
+            btn.size_to_fit()
+            btn.height = compact_height
+            btn.width = max(btn.width + 14, 56)
+            btn.corner_radius = compact_height / 2.0
+            btn.y = safe + 12
+
+        self.export_btn.x = self.close_btn.x - self.export_btn.width - spacing
+        self.palette_btn.x = self.export_btn.x - self.palette_btn.width - spacing
         self.set_needs_display()
 
     def _draw_board(self, m, spiral_progress=None):
