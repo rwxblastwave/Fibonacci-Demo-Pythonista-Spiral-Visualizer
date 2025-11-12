@@ -1,6 +1,9 @@
 # Pythonista 3 — Fibonacci Poster (flipped arc orientation: +90° CCW)
 # Exact 34×21 tiling, distinct colors, notch-safe layout
 # Origin: (24, 6) with 270° (down) initial tangent
+# --------------------------------------------------------------
+#  +  Added a close (X) button in the top-right corner
+# --------------------------------------------------------------
 
 import ui, math
 from objc_util import ObjCClass, on_main_thread
@@ -145,6 +148,21 @@ class FibPoster(ui.View):
         self._safe_top = self._safe_bottom = 0.0
         self.update_safe_insets()
 
+        # ----- Close button -----
+        self.close_btn = ui.Button(title='×',
+                                   font=('<System-Bold>', 32),
+                                   tint_color=(0.3, 0.3, 0.3),
+                                   background_color=(1, 1, 1, 0.7),
+                                   corner_radius=20,
+                                   action=self._close_action)
+        self.close_btn.flex = 'LRTB'   # keep size fixed
+        self.add_subview(self.close_btn)
+
+    # ----------------------------------------------------------
+    def _close_action(self, sender):
+        self.close()
+    # ----------------------------------------------------------
+
     def update_safe_insets(self):
         t, _, b, _ = _ios_safe_insets()
         if t == 0 and b == 0:
@@ -153,6 +171,12 @@ class FibPoster(ui.View):
 
     def layout(self):
         self.update_safe_insets()
+        # Position the close button in the top-right corner
+        btn_size = 44
+        safe = self._safe_top
+        self.close_btn.width = self.close_btn.height = btn_size
+        self.close_btn.x = self.width - btn_size - MARGIN
+        self.close_btn.y = safe + 8
         self.set_needs_display()
 
     def draw(self):
