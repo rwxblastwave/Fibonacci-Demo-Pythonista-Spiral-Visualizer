@@ -21,7 +21,7 @@ The app’s interface is fully responsive, visually clean, and adapts seamlessly
 - **Safe-Area Aware Layout** — fits perfectly on all iPhone models, including iPhone 14 Pro Max (430 × 932 pt)  
 - **Dynamic Spiral Rendering** — computes Fibonacci tiles and arcs in real time  
 - **Colorized Tiling Modes** — accent palettes for striking golden-ratio visuals  
-- **Interactive Controls** — toggle overlays, adjust scaling, and export images  
+- **Interactive Controls** — palette cycling, spiral replay, double-tap zoom, and quick PNG export
 - **Retina-Ready Output** — high-resolution spiral art suitable for print or wallpapers  
 
 ---
@@ -33,18 +33,33 @@ Fibonacci values define the grid, while Bézier arcs trace the spiral through co
 
 Key routines:
 
-- `build_fib_sequence(n)` — generates Fibonacci values for tiling dimensions  
-- `draw_tiles(ctx, seq)` — renders each square with grid alignment  
-- `draw_spiral(ctx, seq)` — overlays arcs through tile quadrants using geometric continuity  
-- `safe_area_insets()` — adapts drawing bounds for devices with a notch or home indicator  
+- `Map` — converts the fixed 34×21 Fibonacci grid into Retina-aligned screen coordinates
+- `_draw_board(mapper, spiral_progress)` — paints squares, grid lines, labels, and the animated spiral
+- `build_spiral_points(mapper)` — samples smooth Bézier-style polylines for the golden spiral path
+- `FibPoster` — the primary `ui.View` handling layout, safe areas, gestures, animation, and export buttons
 
 ---
 
-## 📱 Installation
+## 🚀 Quick Start
 
-1. Open **Pythonista 3** on your iPhone or iPad.  
-2. Copy or import `fibonacci_demo.py` into your **Documents** folder.  
-3. Run the script — the Fibonacci spiral viewer launches immediately.  
+Follow these steps if you simply want to try the visualizer on-device:
+
+1. Open **Pythonista 3** on your iPhone or iPad.
+2. Copy or import `fibonacci_demo.py` into your **Documents** folder.
+3. Run the script — the Fibonacci spiral viewer launches immediately.
+4. Try the built-in controls: tap **Palette** to switch color schemes, **PNG** to export the board, and double-tap to zoom.
+
+### Developing on macOS or PC
+
+While Pythonista is the target runtime, you can still explore the source locally:
+
+1. Clone this repository: `git clone https://github.com/blastwavez/Fibonacci-Demo-Pythonista-Spiral-Visualizer.git`
+2. Open `fibonacci_demo.py` in your favorite editor to review the drawing logic.
+3. Use a Python 3.11 (or newer) environment to lint or unit-test helper functions.
+4. When you are ready to ship to your device, AirDrop or iCloud-sync the script into Pythonista.
+
+> **Tip:** The UI module is unique to Pythonista, so execution outside the app will raise import errors. Use local editing
+> as a preparation step, then deploy to iOS for rendering.
 
 ---
 
@@ -68,7 +83,7 @@ This script visualizes that relationship through recursive square tiling and con
 - **Pythonista 3** (latest version)  
 - **iOS 16 or newer**  
 - Screen optimized for **iPhone 14 Pro Max**  
-- No external dependencies required  |
+- No external dependencies required
 
 ---
 
@@ -89,12 +104,12 @@ Follow along for more mobile-native experiments combining code, geometry, and de
 
 ## 💡 Future Directions
 
-- Animated spiral growth visualization  
-- Tap-to-zoom and pan gestures  
-- Color palette presets inspired by natural patterns  
-- Export resolution scaling for print media  
+- Optional overlay toggles for grid lines and labels
+- Palette editor for custom color presets
+- Animated walkthrough showing how the tiling is constructed
+- Share sheet shortcuts for social media exports
 
 ---
 
-> *“Mathematics reveals its secrets only to those who approach it with pure love, for its own beauty.”*  
+> *“Mathematics reveals its secrets only to those who approach it with pure love, for its own beauty.”*
 > — Archimedes
