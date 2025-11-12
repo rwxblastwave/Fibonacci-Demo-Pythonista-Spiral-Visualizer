@@ -490,12 +490,12 @@ class FibPoster(ui.View):
     # ---------- Gesture handling ----------
     def touch_began(self, touch):
         self._active_touch_id = touch.touch_id
-        self._touch_prev = touch.location
+        self._touch_prev = touch.location()
 
     def touch_moved(self, touch):
         if self._active_touch_id != touch.touch_id or self.zoom <= 0:
             return
-        x, y = touch.location
+        x, y = touch.location()
         px, py = self._touch_prev if self._touch_prev else (x, y)
         self.pan_x += x - px
         self.pan_y += y - py
@@ -508,7 +508,7 @@ class FibPoster(ui.View):
             self._touch_prev = None
         tap_count = getattr(touch, 'tap_count', 0)
         if tap_count >= 2:
-            self._handle_double_tap(touch.location)
+            self._handle_double_tap(touch.location())
         elif tap_count == 1 and self.anim_progress >= 1.0:
             self._start_spiral_animation()
 
