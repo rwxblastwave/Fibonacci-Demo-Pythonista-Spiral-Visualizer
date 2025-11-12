@@ -8,7 +8,8 @@
 #  * Export fix: zero-origin mapper (no CTM needed)
 # --------------------------------------------------------------
 
-import ui, math, os, datetime, console, time
+import ui, math, os, datetime, console, time, weakref
+from collections.abc import Sequence
 from objc_util import ObjCClass, on_main_thread
 
 # ===== Appearance =====
@@ -144,6 +145,39 @@ class Map:
         px = round(px) + (0.5 if (line_width_pt * self.scale) % 2 else 0.0)
         return px / self.scale
 
+# ===== Point helpers =====
+def _to_point_tuple(pt):
+    """Return ``(x, y)`` as floats for various point-like objects.
+
+    Pythonista sometimes hands back weakref proxies for Objective-C point
+    structs.  Converting them here keeps the rest of the drawing code agnostic
+    about the concrete point type.
+    """
+    if isinstance(pt, weakref.ReferenceType):
+        pt = pt()
+    if pt is None:
+        raise ValueError('Point reference no longer valid')
+
+    if isinstance(pt, Sequence) and not isinstance(pt, (str, bytes)):
+        if len(pt) < 2:
+            raise ValueError('Point-like sequence must have at least two items')
+        return float(pt[0]), float(pt[1])
+
+    x = getattr(pt, 'x', None)
+    y = getattr(pt, 'y', None)
+    if x is not None and y is not None:
+        x = x() if callable(x) else x
+        y = y() if callable(y) else y
+        return float(x), float(y)
+
+    if hasattr(pt, '__getitem__'):
+        try:
+            return float(pt[0]), float(pt[1])
+        except Exception:
+            pass
+
+    raise TypeError(f'Unsupported point type: {type(pt)!r}')
+
 # ===== Golden spiral geometry (y-up) =====
 C1, C2, C3, C5, C8, C13, C21 = (25,6), (24,6), (24,5), (26,5), (26,8), (21,8), (21,0)
 SPIRAL_ARCS = [
@@ -172,7 +206,7 @@ def arc_poly(mapper, center, start, sweep_deg, px_per_seg=6.0):
         t = a0 + (a1 - a0) * (i / segs)
         gx = cx + r * math.cos(t)
         gy = cy + r * math.sin(t)
-        pts.append(mapper.pt(gx, gy))
+        pts.append(_to_point_tuple(mapper.pt(gx, gy)))
     return pts
 
 def build_spiral(mapper):
