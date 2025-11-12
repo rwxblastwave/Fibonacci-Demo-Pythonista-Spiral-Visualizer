@@ -489,9 +489,21 @@ class FibPoster(ui.View):
 
     @staticmethod
     def _point_to_tuple(point):
+        if point is None:
+            return None
         if hasattr(point, 'x') and hasattr(point, 'y'):
-            return (point.x, point.y)
-        return tuple(point)
+            x, y = point.x, point.y
+        else:
+            try:
+                x, y = point
+            except (TypeError, ValueError):
+                return None
+        if x is None or y is None:
+            return None
+        try:
+            return (float(x), float(y))
+        except (TypeError, ValueError):
+            return None
 
     # ---------- Gesture handling ----------
     def touch_began(self, touch):
@@ -501,8 +513,18 @@ class FibPoster(ui.View):
     def touch_moved(self, touch):
         if self._active_touch_id != touch.touch_id or self.zoom <= 0:
             return
-        x, y = self._point_to_tuple(touch.location)
-        px, py = self._touch_prev if self._touch_prev else (x, y)
+        loc = self._point_to_tuple(touch.location)
+        if loc is None:
+            return
+        x, y = loc
+        prev = self._touch_prev
+        if prev is None:
+            self._touch_prev = (x, y)
+            return
+        px, py = prev
+        if px is None or py is None:
+            self._touch_prev = (x, y)
+            return
         self.pan_x += x - px
         self.pan_y += y - py
         self._touch_prev = (x, y)
@@ -514,7 +536,9 @@ class FibPoster(ui.View):
             self._touch_prev = None
         tap_count = getattr(touch, 'tap_count', 0)
         if tap_count >= 2:
-            self._handle_double_tap(self._point_to_tuple(touch.location))
+            loc = self._point_to_tuple(touch.location)
+            if loc is not None:
+                self._handle_double_tap(loc)
         elif tap_count == 1 and self.anim_progress >= 1.0:
             self._start_spiral_animation()
 
