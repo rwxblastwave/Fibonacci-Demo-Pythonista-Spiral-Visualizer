@@ -40,11 +40,25 @@ Key routines:
 
 ---
 
-## 📱 Installation
+## 🚀 Quick Start
 
-1. Open **Pythonista 3** on your iPhone or iPad.  
-2. Copy or import `fibonacci_demo.py` into your **Documents** folder.  
-3. Run the script — the Fibonacci spiral viewer launches immediately.  
+Follow these steps if you simply want to try the visualizer on-device:
+
+1. Open **Pythonista 3** on your iPhone or iPad.
+2. Copy or import `fibonacci_demo.py` into your **Documents** folder.
+3. Run the script — the Fibonacci spiral viewer launches immediately.
+
+### Developing on macOS or PC
+
+While Pythonista is the target runtime, you can still explore the source locally:
+
+1. Clone this repository: `git clone https://github.com/blastwavez/Fibonacci-Demo-Pythonista-Spiral-Visualizer.git`
+2. Open `fibonacci_demo.py` in your favorite editor to review the drawing logic.
+3. Use a Python 3.11 (or newer) environment to lint or unit-test helper functions.
+4. When you are ready to ship to your device, AirDrop or iCloud-sync the script into Pythonista.
+
+> **Tip:** The UI module is unique to Pythonista, so execution outside the app will raise import errors. Use local editing
+> as a preparation step, then deploy to iOS for rendering.
 
 ---
 
@@ -96,5 +110,5 @@ Follow along for more mobile-native experiments combining code, geometry, and de
 
 ---
 
-> *“Mathematics reveals its secrets only to those who approach it with pure love, for its own beauty.”*  
+> *“Mathematics reveals its secrets only to those who approach it with pure love, for its own beauty.”*
 > — Archimedes
