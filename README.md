@@ -1,5 +1,7 @@
 # 🌀 Fibonacci Demo — Pythonista Spiral Visualizer
 
+![Fibonacci Spiral Preview](FibonacciBoard_20251112_021821.png)
+
 **A polished Fibonacci spiral generator built with [Pythonista 3](https://omz-software.com/pythonista/), optimized for iPhone 14 Pro Max.**  
 This project explores mathematical beauty through dynamic tiling, golden-ratio geometry, and safe-area-aware UI rendering.
 
@@ -16,10 +18,10 @@ The app’s interface is fully responsive, visually clean, and designed to adapt
 
 ## ✨ Core Features
 
-- **Safe-Area Aware Layout** — fits perfectly on all iPhone models, including iPhone 14 Pro Max (430×932 pt).
-- **Dynamic Spiral Rendering** — computes Fibonacci tiles and arcs in real time.
-- **Colorized Tiling Modes** — apply accent palettes for striking golden-ratio visuals.
-- **Interactive Controls** — toggle overlays, adjust scaling, and export images.
+- **Safe-Area Aware Layout** — fits perfectly on all iPhone models, including iPhone 14 Pro Max (430 × 932 pt).  
+- **Dynamic Spiral Rendering** — computes Fibonacci tiles and arcs in real time.  
+- **Colorized Tiling Modes** — accent palettes for striking golden-ratio visuals.  
+- **Interactive Controls** — toggle overlays, adjust scaling, and export images.  
 - **Retina-Ready Output** — high-resolution spiral art suitable for print or wallpapers.
 
 ---
@@ -27,13 +29,13 @@ The app’s interface is fully responsive, visually clean, and designed to adapt
 ## 🧩 Architecture
 
 The visual composition is rendered entirely with the Pythonista `ui` module.  
-Fibonacci values define the grid, while Bezier arcs trace the spiral through consecutive tile corners.
+Fibonacci values define the grid, while Bézier arcs trace the spiral through consecutive tile corners.
 
 Key routines:
-- `build_fib_sequence(n)` — generates Fibonacci values for tiling dimensions.  
-- `draw_tiles(ctx, seq)` — renders each square with grid alignment.  
-- `draw_spiral(ctx, seq)` — overlays arcs through tile quadrants using geometric continuity.  
-- `safe_area_insets()` — adapts drawing bounds for devices with a notch or home indicator.
+- `build_fib_sequence(n)` — generates Fibonacci values for tiling dimensions  
+- `draw_tiles(ctx, seq)` — renders each square with grid alignment  
+- `draw_spiral(ctx, seq)` — overlays arcs through tile quadrants using geometric continuity  
+- `safe_area_insets()` — adapts drawing bounds for devices with a notch or home indicator
 
 ---
 
@@ -41,7 +43,7 @@ Key routines:
 
 1. Open **Pythonista 3** on your iPhone or iPad.  
 2. Copy or import `fibonacci_demo_final.py` into your **Documents** folder.  
-3. Run the script. The Fibonacci spiral viewer launches immediately.
+3. Run the script — the Fibonacci spiral viewer launches immediately.
 
 ---
 
@@ -62,9 +64,9 @@ This script visualizes that relationship through recursive square tiling and con
 
 ## 🧑‍💻 Technical Requirements
 
-- **Pythonista 3** (latest version)
-- **iOS 16 or newer**
-- Screen optimized for **iPhone 14 Pro Max**
+- **Pythonista 3** (latest version)  
+- **iOS 16 or newer**  
+- Screen optimized for **iPhone 14 Pro Max**  
 - No external dependencies required
 
 ---
@@ -73,6 +75,7 @@ This script visualizes that relationship through recursive square tiling and con
 
 | Version | Date | Changes |
 |----------|------|----------|
+| 1.1 | 2025-11-12 | Added project screenshot and README update for GitHub release |
 | 1.0 | 2025-11-11 | Initial public release — full Fibonacci spiral implementation with safe-area support |
 
 ---
