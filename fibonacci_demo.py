@@ -222,6 +222,7 @@ class FibPoster(ui.View):
         self.anim_progress = 0.0
         self._animating = False
         self.update_safe_insets()
+        self.button_spacing = 6
         self._start_spiral_animation()
 
         # Close (×) button
@@ -324,7 +325,7 @@ class FibPoster(ui.View):
         self.update_safe_insets()
         btn_size = 36
         compact_height = 26
-        spacing = 6
+        spacing = self.button_spacing
         safe = self._safe_top
 
         self.close_btn.width = self.close_btn.height = btn_size
@@ -447,10 +448,24 @@ class FibPoster(ui.View):
         palette = self.current_palette
         title = 'Fibonacci Sequence'
         _, th = ui.measure_string(title, font=FONT_TITLE)
-        button_bottom = getattr(self.close_btn, 'y', 0) + getattr(self.close_btn, 'height', 0)
-        title_y = max(button_bottom + 8, t + 24)
+        button_top = min(getattr(self.close_btn, 'y', t + 10),
+                         getattr(self.export_btn, 'y', t + 12),
+                         getattr(self.palette_btn, 'y', t + 12))
+        button_bottom = max(getattr(self.close_btn, 'y', 0) + getattr(self.close_btn, 'height', 0),
+                            getattr(self.export_btn, 'y', 0) + getattr(self.export_btn, 'height', 0),
+                            getattr(self.palette_btn, 'y', 0) + getattr(self.palette_btn, 'height', 0))
+        row_height = max(button_bottom - button_top, th)
+        title_y = button_top + (row_height - th) / 2.0
+        buttons_left = min(getattr(self.palette_btn, 'x', self.width - MARGIN),
+                           getattr(self.export_btn, 'x', self.width - MARGIN),
+                           getattr(self.close_btn, 'x', self.width - MARGIN))
+        available_width = buttons_left - self.button_spacing - MARGIN
+        if available_width > 0:
+            title_width = min(self.width - 2 * MARGIN, available_width)
+        else:
+            title_width = self.width - 2 * MARGIN
         ui.draw_string(title,
-                       (MARGIN, title_y, self.width - 2 * MARGIN, th),
+                       (MARGIN, title_y, title_width, th),
                        font=FONT_TITLE, color=palette['title'],
                        alignment=ui.ALIGN_CENTER)
 
