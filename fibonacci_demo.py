@@ -488,16 +488,34 @@ class FibPoster(ui.View):
             self._animating = False
 
     @staticmethod
-    def _point_to_tuple(point):
+    def _point_to_tuple(point, view=None):
         if point is None:
             return None
+
+        def _maybe_call(value):
+            if callable(value):
+                attempts = []
+                if view is not None:
+                    attempts.append((view,))
+                attempts.append(())
+                for args in attempts:
+                    try:
+                        return value(*args)
+                    except TypeError:
+                        continue
+            return value
+
+        point = _maybe_call(point)
         if hasattr(point, 'x') and hasattr(point, 'y'):
-            x, y = point.x, point.y
+            x = _maybe_call(getattr(point, 'x'))
+            y = _maybe_call(getattr(point, 'y'))
         else:
             try:
                 x, y = point
             except (TypeError, ValueError):
                 return None
+            x = _maybe_call(x)
+            y = _maybe_call(y)
         if x is None or y is None:
             return None
         try:
@@ -508,12 +526,12 @@ class FibPoster(ui.View):
     # ---------- Gesture handling ----------
     def touch_began(self, touch):
         self._active_touch_id = touch.touch_id
-        self._touch_prev = self._point_to_tuple(touch.location)
+        self._touch_prev = self._point_to_tuple(touch.location, self)
 
     def touch_moved(self, touch):
         if self._active_touch_id != touch.touch_id or self.zoom <= 0:
             return
-        loc = self._point_to_tuple(touch.location)
+        loc = self._point_to_tuple(touch.location, self)
         if loc is None:
             return
         x, y = loc
@@ -536,7 +554,7 @@ class FibPoster(ui.View):
             self._touch_prev = None
         tap_count = getattr(touch, 'tap_count', 0)
         if tap_count >= 2:
-            loc = self._point_to_tuple(touch.location)
+            loc = self._point_to_tuple(touch.location, self)
             if loc is not None:
                 self._handle_double_tap(loc)
         elif tap_count == 1 and self.anim_progress >= 1.0:
