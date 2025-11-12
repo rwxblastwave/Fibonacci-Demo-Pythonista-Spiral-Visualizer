@@ -14,7 +14,7 @@ from objc_util import ObjCClass, on_main_thread
 # ===== Appearance =====
 MARGIN = 18
 GRID_ALPHA = 0.35
-FONT_TITLE   = ('<System-Bold>', 28)
+FONT_TITLE   = ('<System-Bold>', 24)
 FONT_LABEL   = ('<System>', 20)
 FONT_SERIES  = ('<System-Bold>', 20)
 SPIRAL_WIDTH_PT = 4.0
