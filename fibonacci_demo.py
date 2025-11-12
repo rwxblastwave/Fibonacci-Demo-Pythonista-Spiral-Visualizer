@@ -446,9 +446,13 @@ class FibPoster(ui.View):
         # Title & footer (on-screen only)
         palette = self.current_palette
         title = 'Fibonacci Sequence'
-        tw, th = ui.measure_string(title, font=FONT_TITLE)
-        ui.draw_string(title, (MARGIN, max(10, 10 + t), tw, th),
-                       font=FONT_TITLE, color=palette['title'])
+        _, th = ui.measure_string(title, font=FONT_TITLE)
+        button_bottom = getattr(self.close_btn, 'y', 0) + getattr(self.close_btn, 'height', 0)
+        title_y = max(button_bottom + 8, t + 24)
+        ui.draw_string(title,
+                       (MARGIN, title_y, self.width - 2 * MARGIN, th),
+                       font=FONT_TITLE, color=palette['title'],
+                       alignment=ui.ALIGN_CENTER)
 
         seq = '0, 1, 1, 2, 3, 5, 8, 13, 21, 34...'
         sw, sh = ui.measure_string(seq, font=FONT_SERIES)
