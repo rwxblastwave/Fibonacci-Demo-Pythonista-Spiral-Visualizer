@@ -21,7 +21,7 @@ The app’s interface is fully responsive, visually clean, and adapts seamlessly
 - **Safe-Area Aware Layout** — fits perfectly on all iPhone models, including iPhone 14 Pro Max (430 × 932 pt)  
 - **Dynamic Spiral Rendering** — computes Fibonacci tiles and arcs in real time  
 - **Colorized Tiling Modes** — accent palettes for striking golden-ratio visuals  
-- **Interactive Controls** — toggle overlays, adjust scaling, and export images  
+- **Interactive Controls** — palette cycling, spiral replay, double-tap zoom, and quick PNG export
 - **Retina-Ready Output** — high-resolution spiral art suitable for print or wallpapers  
 
 ---
@@ -33,10 +33,10 @@ Fibonacci values define the grid, while Bézier arcs trace the spiral through co
 
 Key routines:
 
-- `build_fib_sequence(n)` — generates Fibonacci values for tiling dimensions  
-- `draw_tiles(ctx, seq)` — renders each square with grid alignment  
-- `draw_spiral(ctx, seq)` — overlays arcs through tile quadrants using geometric continuity  
-- `safe_area_insets()` — adapts drawing bounds for devices with a notch or home indicator  
+- `Map` — converts the fixed 34×21 Fibonacci grid into Retina-aligned screen coordinates
+- `_draw_board(mapper, spiral_progress)` — paints squares, grid lines, labels, and the animated spiral
+- `build_spiral_points(mapper)` — samples smooth Bézier-style polylines for the golden spiral path
+- `FibPoster` — the primary `ui.View` handling layout, safe areas, gestures, animation, and export buttons
 
 ---
 
@@ -47,6 +47,7 @@ Follow these steps if you simply want to try the visualizer on-device:
 1. Open **Pythonista 3** on your iPhone or iPad.
 2. Copy or import `fibonacci_demo.py` into your **Documents** folder.
 3. Run the script — the Fibonacci spiral viewer launches immediately.
+4. Try the built-in controls: tap **Palette** to switch color schemes, **PNG** to export the board, and double-tap to zoom.
 
 ### Developing on macOS or PC
 
@@ -82,7 +83,7 @@ This script visualizes that relationship through recursive square tiling and con
 - **Pythonista 3** (latest version)  
 - **iOS 16 or newer**  
 - Screen optimized for **iPhone 14 Pro Max**  
-- No external dependencies required  |
+- No external dependencies required
 
 ---
 
@@ -103,10 +104,10 @@ Follow along for more mobile-native experiments combining code, geometry, and de
 
 ## 💡 Future Directions
 
-- Animated spiral growth visualization  
-- Tap-to-zoom and pan gestures  
-- Color palette presets inspired by natural patterns  
-- Export resolution scaling for print media  
+- Optional overlay toggles for grid lines and labels
+- Palette editor for custom color presets
+- Animated walkthrough showing how the tiling is constructed
+- Share sheet shortcuts for social media exports
 
 ---
 
